@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>HorariosEVG · Escuela Virgen de Guadalupe</title>
+  <meta name="description" content="Horarios de docentes, secciones y aulas de la Escuela Virgen de Guadalupe (Badajoz).">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0b3a6e">
+  <link rel="icon" href="iconos/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="iconos/favicon-32.png">
+  <!-- iOS -->
+  <link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="HorariosEVG">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="config.js"></script>
+
+  <style>
+    :root {
+      --azul: #0b3a6e; --azul-2: #1557a0; --azul-suave: #e8f0fa;
+      --texto: #1b2433; --texto-2: #5b6678; --borde: #dde3ec;
+      --fondo: #f4f6fa; --tarjeta: #fff;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: var(--fondo); color: var(--texto); -webkit-font-smoothing: antialiased;
+    }
+    svg { width: 1em; height: 1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    button, a.boton { font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+    /* ---------- Pantalla de arranque (app instalada) ---------- */
+    .arranque {
+      position: fixed; inset: 0; z-index: 20; background: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+      padding: env(safe-area-inset-top) 24px env(safe-area-inset-bottom);
+      text-align: center;
+    }
+    .arranque__icono { width: 128px; height: 128px; filter: drop-shadow(0 10px 24px rgba(16,32,64,.18)); animation: entrar .5s ease both; }
+    .arranque__texto { color: var(--texto-2); display: flex; align-items: center; gap: 10px; }
+    .arranque__escuela { position: absolute; bottom: max(28px, env(safe-area-inset-bottom)); height: 56px; }
+    .spinner { width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--azul-suave); border-top-color: var(--azul); animation: girar .8s linear infinite; }
+    @keyframes girar { to { transform: rotate(360deg); } }
+    @keyframes entrar { from { opacity: 0; transform: scale(.92); } to { opacity: 1; transform: none; } }
+
+    /* ---------- Página de instalación ---------- */
+    .cabecera {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: max(10px, env(safe-area-inset-top)) max(20px, env(safe-area-inset-right)) 10px max(20px, env(safe-area-inset-left));
+      background: var(--tarjeta); border-bottom: 3px solid var(--azul);
+    }
+    .cabecera__marca { display: flex; align-items: center; gap: 12px; }
+    .cabecera__icono { width: 42px; height: 42px; }
+    .cabecera__app { font-weight: 700; font-size: 1.15rem; color: var(--azul); }
+    .cabecera__escuela { height: 48px; }
+
+    main { flex: 1; width: 100%; max-width: 980px; margin: 0 auto; padding: 36px max(20px, env(safe-area-inset-right)) 40px max(20px, env(safe-area-inset-left)); }
+    .hero { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; margin-bottom: 32px; }
+    .hero__icono { width: 144px; height: 144px; filter: drop-shadow(0 10px 24px rgba(16,32,64,.16)); }
+    h1 { font-size: 2rem; line-height: 1.15; margin: 0 0 8px; letter-spacing: -.02em; }
+    .hero p { margin: 0 0 20px; color: var(--texto-2); font-size: 1.05rem; line-height: 1.5; }
+    .acciones { display: flex; flex-wrap: wrap; gap: 10px; }
+    .boton {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 48px; padding: 0 20px; border-radius: 12px; border: 0;
+      background: var(--azul); color: #fff; font-weight: 600; text-decoration: none;
+    }
+    .boton--sec { background: var(--tarjeta); color: var(--azul); border: 1px solid var(--borde); }
+    .boton svg { font-size: 20px; }
+    @media (hover: hover) { .boton:hover { background: var(--azul-2); } .boton--sec:hover { background: var(--azul-suave); } }
+
+    .tarjetas { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .tarjeta {
+      background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 16px; padding: 22px;
+      box-shadow: 0 1px 2px rgba(16,32,64,.05), 0 4px 16px rgba(16,32,64,.05);
+    }
+    .tarjeta--destacada { border-color: var(--azul-2); box-shadow: 0 0 0 3px var(--azul-suave); }
+    .tarjeta h2 { display: flex; align-items: center; gap: 10px; font-size: 1.1rem; margin: 0 0 14px; }
+    .tarjeta h2 .so { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--azul-suave); color: var(--azul); font-size: 18px; }
+    ol { margin: 0; padding-left: 22px; line-height: 1.6; color: var(--texto); }
+    ol li { margin-bottom: 6px; }
+    ol li::marker { color: var(--azul); font-weight: 700; }
+    .ico-ios { display: inline-flex; vertical-align: -3px; padding: 2px 5px; border-radius: 6px; background: var(--azul-suave); color: var(--azul); }
+    .nota { margin: 12px 0 0; font-size: .85rem; color: var(--texto-2); line-height: 1.5; }
+    .ok { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; background: #e5f4ec; color: #1f7a4d; font-weight: 600; }
+
+    .qr { display: flex; align-items: center; gap: 22px; margin-top: 16px; }
+    .qr__codigo { padding: 10px; background: #fff; border: 1px solid var(--borde); border-radius: 12px; line-height: 0; }
+    .qr__codigo img, .qr__codigo canvas { width: 132px; height: 132px; }
+
+    .aviso { margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: #fff7e6; color: #8a5a00; border: 1px solid #f3dca8; }
+
+    footer {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 18px 16px max(18px, env(safe-area-inset-bottom));
+      background: var(--tarjeta); border-top: 1px solid var(--borde); font-size: .8rem; color: var(--texto-2);
+    }
+    footer img { height: 52px; }
+
+    @media (max-width: 760px) {
+      main { padding-top: 24px; }
+      .hero { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 16px; }
+      .hero__icono { width: 112px; height: 112px; }
+      h1 { font-size: 1.6rem; }
+      .acciones { justify-content: center; }
+      .acciones .boton { flex: 1 1 100%; }
+      .tarjetas { grid-template-columns: 1fr; }
+      .cabecera__escuela { height: 38px; }
+      .cabecera__icono { width: 36px; height: 36px; }
+      .qr { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Arranque: se muestra cuando la app se abre desde el icono instalado -->
+  <div id="arranque" class="arranque" hidden>
+    <img class="arranque__icono" src="iconos/icono-512.png" alt="HorariosEVG">
+    <div id="arranque-estado" class="arranque__texto"><span class="spinner"></span> Abriendo HorariosEVG…</div>
+    <div id="arranque-acciones" class="acciones" hidden>
+      <button class="boton" onclick="abrirApp()">
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Abrir HorariosEVG
+      </button>
+    </div>
+    <img class="arranque__escuela" src="iconos/escuela.png" alt="Escuela Virgen de Guadalupe">
+  </div>
+
+  <!-- Página de instalación (navegador) -->
+  <header class="cabecera">
+    <div class="cabecera__marca">
+      <img class="cabecera__icono" src="iconos/icono-192.png" alt="">
+      <span class="cabecera__app">HorariosEVG</span>
+    </div>
+    <img class="cabecera__escuela" src="iconos/escuela.png" alt="Escuela Virgen de Guadalupe · Jesuitas · Fundación Loyola">
+  </header>
+
+  <main>
+    <section class="hero">
+      <img class="hero__icono" src="iconos/icono-512.png" alt="Icono de HorariosEVG">
+      <div>
+        <h1>Los horarios del cole, siempre a mano</h1>
+        <p>Consulta el horario de cualquier docente, sección o aula de Secundaria, Bachillerato y Ciclos Formativos. Instálala en tu móvil como una app más.</p>
+        <div class="acciones">
+          <button id="btn-instalar" class="boton" hidden>
+            <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Instalar app
+          </button>
+          <a id="btn-abrir" class="boton boton--sec" href="#">
+            <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            Abrir en el navegador
+          </a>
+        </div>
+        <div id="ya-instalada" class="ok" hidden style="margin-top:14px">
+          <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> HorariosEVG ya está instalada en este dispositivo.
+        </div>
+        <div id="sin-configurar" class="aviso" hidden>
+          Falta configurar la dirección de la app: edita <b>config.js</b> y pega la URL <code>/exec</code> de Apps Script.
+        </div>
+      </div>
+    </section>
+
+    <section class="tarjetas">
+      <article id="guia-ios" class="tarjeta">
+        <h2><span class="so"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span> iPhone y iPad</h2>
+        <ol>
+          <li>Abre esta página en <b>Safari</b>.</li>
+          <li>Pulsa <span class="ico-ios"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11v9h12v-9"/></svg></span> <b>Compartir</b>.</li>
+          <li>Elige <b>Añadir a pantalla de inicio</b>.</li>
+          <li>Pulsa <b>Añadir</b>. El icono de HorariosEVG aparecerá con tus apps.</li>
+        </ol>
+        <p class="nota">La primera vez que la abras te pedirá entrar con tu cuenta @fundacionloyola.es.</p>
+      </article>
+
+      <article id="guia-android" class="tarjeta">
+        <h2><span class="so"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M11 18h2"/></svg></span> Android</h2>
+        <ol>
+          <li>Abre esta página en <b>Chrome</b>.</li>
+          <li>Pulsa <b>Instalar app</b> (arriba) o, en el menú <b>⋮</b>, <b>Añadir a pantalla de inicio → Instalar</b>.</li>
+          <li>Confirma con <b>Instalar</b>. La encontrarás en el cajón de aplicaciones.</li>
+        </ol>
+        <p class="nota">Mantén pulsado el icono para ir directo a Docentes, Secciones o Aulas.</p>
+      </article>
+    </section>
+
+    <section id="bloque-qr" class="tarjeta" style="margin-top:16px" hidden>
+      <h2><span class="so"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M21 14v7h-7"/></svg></span> ¿Estás en el ordenador?</h2>
+      <div class="qr">
+        <div id="qr" class="qr__codigo"></div>
+        <p class="nota" style="margin:0">Escanea este código con la cámara del móvil para abrir esta página allí e instalar la app.<br>En Chrome o Edge también puedes instalarla en el ordenador con el botón <b>Instalar app</b>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <img src="iconos/escuela.png" alt="Escuela Virgen de Guadalupe">
+    <span>Escuela Virgen de Guadalupe · Badajoz</span>
+  </footer>
+
+  <script>
+    (function () {
+      var URL_APP = window.HORARIOSEVG_URL || '';
+      var configurada = /^https:\/\/script\.google\.com\/.+\/exec$/.test(URL_APP);
+      var params = new URLSearchParams(location.search);
+      var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+                  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var esAndroid = /android/i.test(navigator.userAgent);
+      var esMovil = esIOS || esAndroid;
+      var instalada = window.matchMedia('(display-mode: standalone)').matches ||
+                      window.matchMedia('(display-mode: minimal-ui)').matches ||
+                      window.navigator.standalone === true || params.get('app') === '1';
+
+      // Pasa a la app los atajos (?v=lista&tipo=docente…)
+      function destino() {
+        var q = new URLSearchParams();
+        ['v', 'tipo', 'etapa', 'id'].forEach(function (k) { if (params.get(k)) q.set(k, params.get(k)); });
+        var s = q.toString();
+        return URL_APP + (s ? '?' + s : '');
+      }
+
+      window.abrirApp = function () {
+        if (!configurada) return;
+        try { sessionStorage.setItem('horariosevg_abierta', '1'); } catch (e) { }
+        location.href = destino();
+      };
+
+      document.getElementById('btn-abrir').href = configurada ? destino() : '#';
+      if (!configurada) document.getElementById('sin-configurar').hidden = false;
+
+      // ---------- Abierta desde el icono instalado ----------
+      if (instalada) {
+        var arranque = document.getElementById('arranque');
+        arranque.hidden = false;
+        var estado = document.getElementById('arranque-estado');
+        var acciones = document.getElementById('arranque-acciones');
+        var volvio = false;
+        try { volvio = sessionStorage.getItem('horariosevg_abierta') === '1'; } catch (e) { }
+
+        if (!configurada) {
+          estado.textContent = 'La app aún no está configurada.';
+        } else if (!navigator.onLine) {
+          estado.textContent = 'Sin conexión. Conéctate a internet para ver los horarios.';
+          acciones.hidden = false;
+        } else if (volvio) {
+          // El usuario cerró la vista de Google y volvió aquí: no se reabre sola
+          estado.textContent = 'HorariosEVG';
+          acciones.hidden = false;
+        } else {
+          setTimeout(window.abrirApp, 350);
+        }
+        window.addEventListener('online', function () { if (!volvio) window.abrirApp(); });
+        // Vuelta atrás desde Google (página restaurada de la caché del navegador)
+        window.addEventListener('pageshow', function (e) {
+          var abierta = false;
+          try { abierta = sessionStorage.getItem('horariosevg_abierta') === '1'; } catch (x) { }
+          if (e.persisted || abierta) {
+            volvio = true;
+            estado.textContent = 'HorariosEVG';
+            acciones.hidden = false;
+          }
+        });
+      }
+
+      // ---------- Instalación ----------
+      var aviso = null;
+      var btn = document.getElementById('btn-instalar');
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault(); aviso = e; btn.hidden = false;
+      });
+      btn.addEventListener('click', function () {
+        if (!aviso) return;
+        aviso.prompt();
+        aviso.userChoice.finally(function () { aviso = null; btn.hidden = true; });
+      });
+      window.addEventListener('appinstalled', function () {
+        btn.hidden = true; document.getElementById('ya-instalada').hidden = false;
+      });
+
+      // Destaca la guía del sistema del usuario
+      if (esIOS) {
+        document.getElementById('guia-ios').classList.add('tarjeta--destacada');
+        document.querySelector('.tarjetas').prepend(document.getElementById('guia-ios'));
+      } else if (esAndroid) {
+        document.getElementById('guia-android').classList.add('tarjeta--destacada');
+        document.querySelector('.tarjetas').prepend(document.getElementById('guia-android'));
+      }
+
+      // QR para pasar del ordenador al móvil
+      if (!esMovil && !instalada) {
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+        s.onload = function () {
+          try {
+            new QRCode(document.getElementById('qr'), {
+              text: location.origin + location.pathname, width: 264, height: 264,
+              colorDark: '#0b3a6e', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M
+            });
+            document.getElementById('bloque-qr').hidden = false;
+          } catch (e) { }
+        };
+        document.head.appendChild(s);
+      }
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () { }); });
+      }
+    })();
+  </script>
+</body>
+</html>
