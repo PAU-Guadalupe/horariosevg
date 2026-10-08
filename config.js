@@ -6,4 +6,4 @@
  * cuenta del colegio aunque tenga varias cuentas de Google:
  *   https://script.google.com/a/macros/fundacionloyola.es/s/XXXXXXXXXXXX/exec
  */
-window.HORARIOSEVG_URL = 'PEGA_AQUI_LA_URL_EXEC';
+window.HORARIOSEVG_URL = 'https://script.google.com/a/macros/fundacionloyola.es/s/AKfycbxcu9Sdz7cObYZBXGB_hTyMvuUcZQRvlVntbLRnOmA_BWR9iECsj15-9T0QKnS6FUcM/exec';
