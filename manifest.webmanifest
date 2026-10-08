@@ -14,29 +14,29 @@
   "theme_color": "#0b3a6e",
   "categories": ["education", "productivity"],
   "icons": [
-    { "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "iconos/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "iconos/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "iconos/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
     {
       "name": "Horario de docentes",
       "short_name": "Docentes",
       "url": "./?app=1&v=lista&tipo=docente",
-      "icons": [{ "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "icono-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Horario de secciones",
       "short_name": "Secciones",
       "url": "./?app=1&v=lista&tipo=seccion",
-      "icons": [{ "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "icono-192.png", "sizes": "192x192", "type": "image/png" }]
     },
     {
       "name": "Horario de aulas",
       "short_name": "Aulas",
       "url": "./?app=1&v=lista&tipo=aula",
-      "icons": [{ "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png" }]
+      "icons": [{ "src": "icono-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }

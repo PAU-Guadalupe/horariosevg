@@ -9,10 +9,14 @@
   <!-- PWA -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#0b3a6e">
-  <link rel="icon" href="iconos/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="iconos/favicon-32.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
   <!-- iOS -->
-  <link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="apple-touch-icon-167.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="HorariosEVG">
@@ -125,28 +129,28 @@
 
   <!-- Arranque: se muestra cuando la app se abre desde el icono instalado -->
   <div id="arranque" class="arranque" hidden>
-    <img class="arranque__icono" src="iconos/icono-512.png" alt="HorariosEVG">
+    <img class="arranque__icono" src="icono-512.png" alt="HorariosEVG">
     <div id="arranque-estado" class="arranque__texto"><span class="spinner"></span> Abriendo HorariosEVG…</div>
     <div id="arranque-acciones" class="acciones" hidden>
       <button class="boton" onclick="abrirApp()">
         <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg> Abrir HorariosEVG
       </button>
     </div>
-    <img class="arranque__escuela" src="iconos/escuela.png" alt="Escuela Virgen de Guadalupe">
+    <img class="arranque__escuela" src="escuela.png" alt="Escuela Virgen de Guadalupe">
   </div>
 
   <!-- Página de instalación (navegador) -->
   <header class="cabecera">
     <div class="cabecera__marca">
-      <img class="cabecera__icono" src="iconos/icono-192.png" alt="">
+      <img class="cabecera__icono" src="icono-192.png" alt="">
       <span class="cabecera__app">HorariosEVG</span>
     </div>
-    <img class="cabecera__escuela" src="iconos/escuela.png" alt="Escuela Virgen de Guadalupe · Jesuitas · Fundación Loyola">
+    <img class="cabecera__escuela" src="escuela.png" alt="Escuela Virgen de Guadalupe · Jesuitas · Fundación Loyola">
   </header>
 
   <main>
     <section class="hero">
-      <img class="hero__icono" src="iconos/icono-512.png" alt="Icono de HorariosEVG">
+      <img class="hero__icono" src="icono-512.png" alt="Icono de HorariosEVG">
       <div>
         <h1>Los horarios del cole, siempre a mano</h1>
         <p>Consulta el horario de cualquier docente, sección o aula de Secundaria, Bachillerato y Ciclos Formativos. Instálala en tu móvil como una app más.</p>
@@ -201,7 +205,7 @@
   </main>
 
   <footer>
-    <img src="iconos/escuela.png" alt="Escuela Virgen de Guadalupe">
+    <img src="escuela.png" alt="Escuela Virgen de Guadalupe">
     <span>Escuela Virgen de Guadalupe · Badajoz</span>
   </footer>
 
@@ -221,6 +225,7 @@
       // Pasa a la app los atajos (?v=lista&tipo=docente…)
       function destino() {
         var q = new URLSearchParams();
+        q.set('app', '1');
         ['v', 'tipo', 'etapa', 'id'].forEach(function (k) { if (params.get(k)) q.set(k, params.get(k)); });
         var s = q.toString();
         return URL_APP + (s ? '?' + s : '');

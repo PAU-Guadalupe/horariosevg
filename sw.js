@@ -3,17 +3,19 @@
  * Guarda la pantalla de inicio y los iconos para que la app abra al instante
  * y muestre un aviso si no hay conexión. Los horarios siempre se piden en línea.
  */
-const VERSION = 'horariosevg-v1';
+const VERSION = 'horariosevg-v2';
 const ARCHIVOS = [
   './',
   './index.html',
   './config.js',
   './manifest.webmanifest',
-  './iconos/icono-192.png',
-  './iconos/icono-512.png',
-  './iconos/apple-touch-icon.png',
-  './iconos/favicon-32.png',
-  './iconos/escuela.png'
+  './icono-192.png',
+  './icono-512.png',
+  './apple-touch-icon.png',
+  './apple-touch-icon-152.png',
+  './apple-touch-icon-167.png',
+  './favicon-32.png',
+  './escuela.png'
 ];
 
 self.addEventListener('install', (e) => {
