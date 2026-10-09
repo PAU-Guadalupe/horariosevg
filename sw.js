@@ -3,7 +3,7 @@
  * Guarda la pantalla de inicio y los iconos para que la app abra al instante
  * y muestre un aviso si no hay conexión. Los horarios siempre se piden en línea.
  */
-const VERSION = 'horariosevg-v2';
+const VERSION = 'horariosevg-v3';
 const ARCHIVOS = [
   './',
   './index.html',
