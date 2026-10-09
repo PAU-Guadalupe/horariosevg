@@ -158,10 +158,6 @@
           <button id="btn-instalar" class="boton" hidden>
             <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Instalar app
           </button>
-          <a id="btn-abrir" class="boton boton--sec" href="#">
-            <svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
-            Abrir en el navegador
-          </a>
         </div>
         <div id="ya-instalada" class="ok" hidden style="margin-top:14px">
           <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> HorariosEVG ya está instalada en este dispositivo.
@@ -176,7 +172,7 @@
       <article id="guia-ios" class="tarjeta">
         <h2><span class="so"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg></span> iPhone y iPad</h2>
         <ol>
-          <li>Abre esta página en <b>Safari</b> y <b>quédate en ella</b> (no pulses «Abrir»).</li>
+          <li>Abre esta página en <b>Safari</b> y <b>quédate en ella</b>.</li>
           <li>Pulsa <span class="ico-ios"><svg viewBox="0 0 24 24"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11v9h12v-9"/></svg></span> <b>Compartir</b>.</li>
           <li>Elige <b>Añadir a pantalla de inicio</b>.</li>
           <li>Pulsa <b>Añadir</b>. El icono de HorariosEVG aparecerá con tus apps.</li>
@@ -238,7 +234,6 @@
         location.href = destino();
       };
 
-      document.getElementById('btn-abrir').href = configurada ? destino() : '#';
       if (!configurada) document.getElementById('sin-configurar').hidden = false;
 
       // ---------- Abierta desde el icono instalado ----------
