@@ -121,7 +121,7 @@
       .tarjetas { grid-template-columns: 1fr; }
       .cabecera__escuela { height: 38px; }
       .cabecera__icono { width: 36px; height: 36px; }
-      .qr { display: none; }
+      #bloque-qr { display: none !important; }
     }
   </style>
 </head>
@@ -155,7 +155,11 @@
         <h1>Los horarios del cole, siempre a mano</h1>
         <p>Consulta el horario de cualquier docente, sección o aula de Secundaria, Bachillerato y Ciclos Formativos. Instálala en tu móvil como una app más.</p>
         <div class="acciones">
-          <button id="btn-instalar" class="boton" hidden>
+          <a id="btn-web" class="boton" href="#" target="_blank" rel="noopener" hidden>
+            <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Acceso web (con ordenador)
+          </a>
+          <button id="btn-instalar" class="boton boton--sec" hidden>
             <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg> Instalar app
           </button>
         </div>
@@ -235,6 +239,13 @@
       };
 
       if (!configurada) document.getElementById('sin-configurar').hidden = false;
+
+      // Acceso web: solo en ordenador (en el móvil se instala la app)
+      if (!esMovil && !instalada && configurada) {
+        var web = document.getElementById('btn-web');
+        web.href = URL_APP;
+        web.hidden = false;
+      }
 
       // ---------- Abierta desde el icono instalado ----------
       if (instalada) {
